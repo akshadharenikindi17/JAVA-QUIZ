@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Adaptive Quiz System</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0; min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #dbeafe, #f3e8ff);
+            display: flex; align-items: center; justify-content: center;
+            padding: 20px; color: #1f2937;
+        }
+        .card {
+            background: white; width: 100%; max-width: 600px;
+            padding: 32px; border-radius: 20px;
+            box-shadow: 0 12px 35px #33415520;
+        }
+        h1 { color: #4f46e5; margin-top: 0; }
+        .muted { color: #64748b; line-height: 1.6; }
+        input[type=text] {
+            width: 100%; padding: 13px; border: 1px solid #cbd5e1;
+            border-radius: 10px; margin: 10px 0 16px; font-size: 16px;
+        }
+        button, .option {
+            display: block; width: 100%; padding: 13px;
+            border: 0; border-radius: 10px; margin-top: 12px;
+            font-size: 16px; cursor: pointer;
+        }
+        button { background: #4f46e5; color: white; font-weight: bold; }
+        button:hover { background: #4338ca; }
+        .option {
+            background: #f8fafc; border: 1px solid #cbd5e1;
+            color: #1f2937; text-align: left;
+        }
+        .option:hover { background: #e0e7ff; }
+        .tag {
+            display: inline-block; padding: 6px 12px; border-radius: 20px;
+            background: #ede9fe; color: #5b21b6; font-size: 14px;
+        }
+        .feedback { background: #f1f5f9; padding: 12px; border-radius: 10px; }
+        .score { font-size: 30px; color: #4f46e5; font-weight: bold; }
+    </style>
+</head>
+<body>
+<main class="card">
+    <h1>🧠 Adaptive Quiz System</h1>
+    <p class="muted">Welcome! Answer each question and watch your quiz difficulty adapt to your performance.</p>
+
+    <section th:if="${!started}">
+        <h2>Let's get started!</h2>
+        <form action="/start" method="post">
+            <label for="student">Enter your name</label>
+            <input id="student" type="text" name="student"
+                   placeholder="Your name" maxlength="60" required>
+            <button type="submit">Start Quiz</button>
+        </form>
+    </section>
+
+    <section th:if="${started and !finished and question != null}">
+        <p>Hello, <strong th:text="${student}">Student</strong>!</p>
+        <p>
+            <span class="tag">Question <span th:text="${number}">1</span>
+                of <span th:text="${total}">6</span></span>
+        </p>
+        <p><span class="tag">Adaptive level:
+            <span th:text="${difficulty == 0 ? 'Easy' : (difficulty == 1 ? 'Medium' : 'Hard')}">Easy</span>
+        </span></p>
+        <h2 th:text="${question.text}">Question goes here</h2>
+        <form action="/answer" method="post">
+            <button class="option" type="submit" name="choice" value="A"
+                    th:text="'A. ' + ${question.a}">A</button>
+            <button class="option" type="submit" name="choice" value="B"
+                    th:text="'B. ' + ${question.b}">B</button>
+            <button class="option" type="submit" name="choice" value="C"
+                    th:text="'C. ' + ${question.c}">C</button>
+            <button class="option" type="submit" name="choice" value="D"
+                    th:text="'D. ' + ${question.d}">D</button>
+        </form>
+        <p class="feedback" th:if="${feedback != null}" th:text="${feedback}"></p>
+    </section>
+
+    <section th:if="${started and finished}">
+        <h2>Quiz completed! 🎉</h2>
+        <p th:text="'Great effort, ' + ${student} + '!'">Great effort!</p>
+        <p class="score"><span th:text="${score}">0</span> / <span th:text="${total}">6</span></p>
+        <p class="muted">Your results are stored temporarily for this session. Oracle database saving can be added later.</p>
+        <form action="/restart" method="post">
+            <button type="submit">Try Again</button>
+        </form>
+    </section>
+</main>
+</body>
+</html>
