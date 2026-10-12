@@ -1,0 +1,39 @@
+ADAPTIVE QUIZ SYSTEM — JAVA SWING FRONTEND
+
+Included files:
+- DBConnection.java: Oracle JDBC connection settings.
+- AdaptiveQuizApp.java: Swing UI with student registration, question management,
+  adaptive quiz, result display, and quiz history.
+
+REQUIREMENTS
+- JDK 8 or newer (JDK 11/17/21 recommended)
+- Oracle Database with the six tables created from the supplied SQL scripts
+- Oracle JDBC driver (ojdbc8/ojdbc11, appropriate for your JDK)
+
+SETUP
+1. Create a Java project in your IDE.
+2. Add DBConnection.java and AdaptiveQuizApp.java to the same source folder.
+3. Add the Oracle JDBC driver JAR to the project's libraries/build path.
+4. Open DBConnection.java and set:
+   URL, USERNAME, PASSWORD
+   Example URL: jdbc:oracle:thin:@localhost:1521/XEPDB1
+   Your Oracle service name may be different.
+5. Ensure the six tables exist:
+   Student, Subject, Question, Quiz_Attempt, Student_Response, Quiz_Result
+6. Run AdaptiveQuizApp.java.
+
+FEATURES
+- Register and search students
+- Add questions with four options and difficulty
+- Take a quiz, starting at Easy
+- Correct answers raise difficulty; wrong answers lower it
+- Save every answer and final result in Oracle
+- View quiz history
+
+NOTES
+- The app expects the table and column names from the supplied Oracle SQL scripts.
+- For the first test, insert subjects and sample questions with the SQL scripts.
+- It is a student project starter; add role-based admin login, edit/delete screens,
+  stronger validation, and more questions as needed.
+- The quiz ends when the chosen question count is reached or no unused questions
+  remain for the selected subject.
