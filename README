@@ -1,0 +1,43 @@
+ADAPTIVE QUIZ SYSTEM — ORACLE SQL*PLUS FILES
+
+Files:
+01_create_tables.sql       Creates the six database tables.
+02_insert_sample_data.sql  Adds sample students, subjects and questions.
+03_check_tables.sql        Checks tables and sample data.
+04_view_previous_attempts.sql
+                           Displays previous quiz attempts and results.
+05_spool_output.sql        Saves selected SQL*Plus output to a text file.
+
+HOW TO RUN IN SQL*PLUS
+
+1. Extract this folder somewhere convenient, for example:
+   D:\25251A05T7\adaptive_quiz_sql_files
+
+2. Open SQL*Plus and connect to your Oracle schema.
+
+3. Run the table creation script (use your actual folder path):
+   @D:\25251A05T7\adaptive_quiz_sql_files\01_create_tables.sql
+
+4. Run the sample data script:
+   @D:\25251A05T7\adaptive_quiz_sql_files\02_insert_sample_data.sql
+
+5. Check the results:
+   @D:\25251A05T7\adaptive_quiz_sql_files\03_check_tables.sql
+
+6. To view quiz history later:
+   @D:\25251A05T7\adaptive_quiz_sql_files\04_view_previous_attempts.sql
+
+7. To save output to a text file:
+   Ensure D:\25251A05T7 exists, then run:
+   @D:\25251A05T7\adaptive_quiz_sql_files\05_spool_output.sql
+
+IMPORTANT:
+- Run the scripts using an Oracle schema with permission to create tables.
+- These scripts are intended for a fresh set of tables. If you already created
+  the tables, do not rerun 01_create_tables.sql; Oracle will report that the
+  table name is already used.
+- The sample data script is intended to run once. Running it again may create
+  duplicate students or subjects; subject_name is UNIQUE, so duplicate subjects
+  will cause an error.
+- SPOOL output is plain text. Use .txt rather than .doc for SQL*Plus output.
+- The Java application still needs Oracle JDBC configuration separately.
